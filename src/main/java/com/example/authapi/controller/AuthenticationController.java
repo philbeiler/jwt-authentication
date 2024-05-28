@@ -13,14 +13,19 @@ import com.example.authapi.responses.LoginResponse;
 import com.example.authapi.services.AuthenticationService;
 import com.example.authapi.services.JwtService;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RequestMapping("/auth")
 @RestController
+@Tag(name = "Authentication Controller", description = "Authentication API", externalDocs = @ExternalDocumentation(description = "Wiki page about MyController. (TEST)", url = "https://confluence.mycorp.com/display/..."))
 public class AuthenticationController {
     private final JwtService            jwtService;
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(final JwtService jwtService, final AuthenticationService authenticationService) {
+    public AuthenticationController(final JwtService jwtService,
+                                    final AuthenticationService authenticationService) {
         this.jwtService            = jwtService;
         this.authenticationService = authenticationService;
     }
@@ -34,9 +39,9 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody final LoginUserDto loginUserDto) {
-        final var           authenticatedUser = authenticationService.authenticate(loginUserDto);
+        final var authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-        final var           jwtToken          = jwtService.generateToken(authenticatedUser);
+        final var jwtToken          = jwtService.generateToken(authenticatedUser);
 
         final var loginResponse     = new LoginResponse();
         loginResponse.setToken(jwtToken);

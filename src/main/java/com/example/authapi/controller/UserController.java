@@ -12,10 +12,12 @@ import com.example.authapi.entities.User;
 import com.example.authapi.services.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RequestMapping("/users")
 @RestController
-//@SecurityRequirement(name = "Bearer Auth")
+@SecurityRequirement(name = "Bearer Auth")
+@Tag(name = "User Controller", description = "User API")
 public class UserController {
     private final UserService userService;
 

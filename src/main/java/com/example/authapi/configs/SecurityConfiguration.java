@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfiguration(final JwtAuthenticationFilter jwtAuthenticationFilter,
-            final AuthenticationProvider authenticationProvider) {
+                                 final AuthenticationProvider authenticationProvider) {
         this.authenticationProvider  = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
@@ -29,6 +29,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests().requestMatchers("/auth/**").permitAll()//
+                .requestMatchers("/").permitAll() //
+                .requestMatchers("/swagger-ui**").permitAll() //
                 .requestMatchers("/swagger-ui/**").permitAll() //
                 .requestMatchers("/v3/**").permitAll() //
                 .anyRequest().authenticated().and().sessionManagement()
